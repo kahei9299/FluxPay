@@ -1,0 +1,27 @@
+cat > .gitignore << 'EOF'
+# ── Anchor / Rust ───────────────────────────────────────────────────────────────
+target/
+**/*.rs.bk
+Cargo.lock
+
+# ── Anchor local validator artifacts ───────────────────────────────────────────
+test-ledger/
+.anchor/
+
+# ── Node / JS ─────────────────────────────────────────────────────────────────
+node_modules/
+yarn.lock
+package-lock.json
+.yarn/
+
+# ── Solana keys & secrets (DO NOT COMMIT) ─────────────────────────────────────
+**/id.json
+**/*-keypair.json
+*.key
+*.pem
+.env
+
+# ── OS / Misc ─────────────────────────────────────────────────────────────────
+.DS_Store
+dist/
+EOF
