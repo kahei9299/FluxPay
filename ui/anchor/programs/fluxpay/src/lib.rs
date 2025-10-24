@@ -20,22 +20,16 @@ pub mod fluxpay {
 
     // (2) Recipient withdraws within rules
     pub fn withdraw(ctx: Context<Withdraw>, amount: u64) -> Result<()> {
+        let allowance = &mut ctx.accounts.allowance;
         let clock = Clock::get()?;
-        // Read-only checks on allowance first
-        let allowance_ro = &ctx.accounts.allowance;
-        require!(clock.unix_timestamp <= allowance_ro.expires_at, ErrorCode::AllowanceExpired);
-        require!(allowance_ro.withdrawn + amount <= allowance_ro.total, ErrorCode::InsufficientAllowance);
 
-        // Ensure the PDA vault has enough lamports to cover this withdrawal
+        require!(clock.unix_timestamp <= allowance.expires_at, ErrorCode::AllowanceExpired);
+        require!(allowance.withdrawn + amount <= allowance.total, ErrorCode::InsufficientAllowance);
+
+        allowance.withdrawn += amount;
+
         let allowance_info = ctx.accounts.allowance.to_account_info();
         let recipient_info = ctx.accounts.recipient.to_account_info();
-
-        let vault_lamports = **allowance_info.lamports.borrow();
-        require!(vault_lamports >= amount, ErrorCode::InsufficientVaultBalance);
-
-        // Now mutate state and move lamports
-        let allowance = &mut ctx.accounts.allowance;
-        allowance.withdrawn += amount;
 
         **allowance_info.try_borrow_mut_lamports()? -= amount;
         **recipient_info.try_borrow_mut_lamports()? += amount;
@@ -51,14 +45,8 @@ pub mod fluxpay {
         let allowance_info = ctx.accounts.allowance.to_account_info();
         let giver_info = ctx.accounts.giver.to_account_info();
 
-        // Only reclaim what's available in the vault to avoid underflow
-        let vault_lamports = **allowance_info.lamports.borrow();
-        let to_reclaim = core::cmp::min(remaining, vault_lamports);
-
-        if to_reclaim > 0 {
-            **allowance_info.try_borrow_mut_lamports()? -= to_reclaim;
-            **giver_info.try_borrow_mut_lamports()? += to_reclaim;
-        }
+        **allowance_info.try_borrow_mut_lamports()? -= remaining;
+        **giver_info.try_borrow_mut_lamports()? += remaining;
 
         Ok(())
     }
@@ -123,6 +111,4 @@ pub enum ErrorCode {
     AllowanceExpired,
     #[msg("Withdrawal exceeds limit")]
     InsufficientAllowance,
-    #[msg("Vault does not have enough lamports")]
-    InsufficientVaultBalance,
 }
