@@ -34,7 +34,7 @@ FluxPay lets a giver set a time-bound SOL allowance for a recipient with an on-c
 
 ## Preview
 <p align="center">
-  <img src="ui/public/og-fluxpay.png" alt="FluxPay UI" width="720" />
+  <img src="ui/public/fluxpay-ui.pngpng" alt="FluxPay UI" width="720" />
 </p>
 
 ## Development
