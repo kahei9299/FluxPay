@@ -13,7 +13,7 @@ import { lamportsToSol, formatSol, formatDate } from '@/lib/fluxpay-program'
 // useConnection already imported above
 import { useQuery } from '@tanstack/react-query'
 
-export function FluxpayUiClose() {
+export function FluxpayUiClose({ variant = 'card' }: { variant?: 'card' | 'modal' }) {
   const wallet = useWallet()
   const { connection } = useConnection()
   const closeMutation = useCloseAllowance()
@@ -95,17 +95,8 @@ export function FluxpayUiClose() {
 
   const isGiver = wallet.publicKey && allowance && allowance.giver.toBase58() === wallet.publicKey.toBase58()
 
-  return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <XCircle className="w-5 h-5" />
-          Close Allowance
-        </CardTitle>
-        <CardDescription>Reclaim remaining funds and close the allowance (givers only)</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-4">
+  const form = (
+    <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <Label htmlFor="allowanceAddress">Allowance Address (PDA)</Label>
             <Input
@@ -219,8 +210,23 @@ export function FluxpayUiClose() {
               Close Another
             </Button>
           )}
-        </form>
-      </CardContent>
+    </form>
+  )
+
+  if (variant === 'modal') {
+    return form
+  }
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">
+          <XCircle className="w-5 h-5" />
+          Close Allowance
+        </CardTitle>
+        <CardDescription>Reclaim remaining funds and close the allowance (givers only)</CardDescription>
+      </CardHeader>
+      <CardContent>{form}</CardContent>
     </Card>
   )
 }

@@ -11,7 +11,7 @@ import { ExternalLink, Loader2, PlusCircle } from 'lucide-react'
 import { getAllowancePda, solToLamports } from '@/lib/fluxpay-program'
 import { useQueryClient } from '@tanstack/react-query'
 
-export function FluxpayUiInitialize() {
+export function FluxpayUiInitialize({ variant = 'card' }: { variant?: 'card' | 'modal' }) {
   const wallet = useWallet()
   const { connection } = useConnection()
   const queryClient = useQueryClient()
@@ -107,17 +107,8 @@ export function FluxpayUiInitialize() {
       : `https://explorer.solana.com/tx/${sig}?cluster=${cluster}`
   }
 
-  return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <PlusCircle className="w-5 h-5" />
-          Create Allowance
-        </CardTitle>
-        <CardDescription>Set up a new programmable allowance for a recipient</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-4">
+  const form = (
+    <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <Label>Giver (Connected Wallet)</Label>
             <Input
@@ -243,8 +234,23 @@ export function FluxpayUiInitialize() {
               </Button>
             </div>
           )}
-        </form>
-      </CardContent>
+    </form>
+  )
+
+  if (variant === 'modal') {
+    return form
+  }
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">
+          <PlusCircle className="w-5 h-5" />
+          Create Allowance
+        </CardTitle>
+        <CardDescription>Set up a new programmable allowance for a recipient</CardDescription>
+      </CardHeader>
+      <CardContent>{form}</CardContent>
     </Card>
   )
 }

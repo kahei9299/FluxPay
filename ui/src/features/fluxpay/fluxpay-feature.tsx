@@ -4,6 +4,7 @@ import { AppHero } from '@/components/app-hero'
 import { FluxpayUiInitialize } from './ui/fluxpay-ui-initialize'
 import { FluxpayUiWithdraw } from './ui/fluxpay-ui-withdraw'
 import { FluxpayUiClose } from './ui/fluxpay-ui-close'
+import { AppModal } from '@/components/app-modal'
 
 export default function FluxpayFeature() {
   return (
@@ -13,10 +14,16 @@ export default function FluxpayFeature() {
         subtitle="Programmable allowances on Solana - Set time limits and spending caps for secure fund transfers"
       />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <FluxpayUiInitialize />
-          <FluxpayUiWithdraw />
-          <FluxpayUiClose />
+        <div className="flex flex-wrap gap-3 mb-6">
+          <AppModal title="Create Allowance">
+            <FluxpayUiInitialize variant="modal" />
+          </AppModal>
+          <AppModal title="Withdraw">
+            <FluxpayUiWithdraw variant="modal" />
+          </AppModal>
+          <AppModal title="Close">
+            <FluxpayUiClose variant="modal" />
+          </AppModal>
         </div>
 
         <div className="mt-8 p-6 bg-muted/50 rounded-lg border">

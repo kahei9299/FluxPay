@@ -13,7 +13,7 @@ import { lamportsToSol, formatSol, formatDate, getTimeRemaining } from '@/lib/fl
 import { useQuery } from '@tanstack/react-query'
 import { useConnection } from '@solana/wallet-adapter-react'
 
-export function FluxpayUiWithdraw() {
+export function FluxpayUiWithdraw({ variant = 'card' }: { variant?: 'card' | 'modal' }) {
   const wallet = useWallet()
   const { connection } = useConnection()
   const withdrawMutation = useWithdrawAllowance()
@@ -100,17 +100,8 @@ export function FluxpayUiWithdraw() {
     ? Math.floor(Date.now() / 1000) > Number(allowance.expiresAt)
     : false
 
-  return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <ArrowDownCircle className="w-5 h-5" />
-          Withdraw Funds
-        </CardTitle>
-        <CardDescription>Withdraw from an allowance (recipients only)</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-4">
+  const form = (
+    <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <Label htmlFor="allowanceAddress">Allowance Address (PDA)</Label>
             <Input
@@ -214,8 +205,23 @@ export function FluxpayUiWithdraw() {
               'Withdraw'
             )}
           </Button>
-        </form>
-      </CardContent>
+    </form>
+  )
+
+  if (variant === 'modal') {
+    return form
+  }
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">
+          <ArrowDownCircle className="w-5 h-5" />
+          Withdraw Funds
+        </CardTitle>
+        <CardDescription>Withdraw from an allowance (recipients only)</CardDescription>
+      </CardHeader>
+      <CardContent>{form}</CardContent>
     </Card>
   )
 }
