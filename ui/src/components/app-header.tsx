@@ -3,6 +3,7 @@ import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
+import { BrandLogo } from '@/components/brand-logo'
 import { Button } from '@/components/ui/button'
 import { Menu, X } from 'lucide-react'
 import { ThemeSelect } from '@/components/theme-select'
@@ -26,8 +27,9 @@ export function AppHeader({ links = [] }: { links: { label: string; path: string
     <header className="relative z-50 px-4 py-2 bg-card/50">
       <div className="mx-auto flex justify-between items-center">
         <div className="flex items-baseline gap-4">
-          <Link className="text-xl font-bold hover:text-neutral-500 dark:hover:text-white" href="/">
-            <span>FluxPay</span>
+          <Link className="flex items-center gap-2 hover:opacity-90" href="/">
+            <BrandLogo variant="mark" size={28} />
+            <span className="text-xl font-bold">FluxPay</span>
           </Link>
           <div className="hidden md:flex items-center">
             <ul className="flex gap-4 flex-nowrap items-center">
