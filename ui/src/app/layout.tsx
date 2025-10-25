@@ -7,6 +7,19 @@ import React from 'react'
 export const metadata: Metadata = {
   title: 'FluxPay - Programmable Allowances on Solana',
   description: 'Set time limits and spending caps for secure fund transfers on Solana',
+  icons: {
+    icon: '/favicon.svg',
+    apple: '/favicon.svg',
+  },
+  openGraph: {
+    images: ['/og-fluxpay.png'],
+    title: 'FluxPay',
+    description: 'Programmable allowances on Solana',
+  },
+  twitter: {
+    images: ['/og-fluxpay.png'],
+    card: 'summary_large_image',
+  },
 }
 
 const links: { label: string; path: string }[] = [

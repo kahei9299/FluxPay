@@ -1,6 +1,7 @@
 'use client'
 
 import { AppHero } from '@/components/app-hero'
+import { BrandLogo } from '@/components/brand-logo'
 import { FluxpayUiInitialize } from './ui/fluxpay-ui-initialize'
 import { FluxpayUiWithdraw } from './ui/fluxpay-ui-withdraw'
 import { FluxpayUiClose } from './ui/fluxpay-ui-close'
@@ -9,7 +10,12 @@ export default function FluxpayFeature() {
   return (
     <div>
       <AppHero
-        title="FluxPay"
+        title={
+          <h1 className="text-5xl font-bold inline-flex items-center gap-3 justify-center">
+            <BrandLogo variant="mark" size={44} />
+            <span>FluxPay</span>
+          </h1>
+        }
         subtitle="Programmable allowances on Solana - Set time limits and spending caps for secure fund transfers"
       />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

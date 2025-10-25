@@ -1,0 +1,24 @@
+<svg width="640" height="200" viewBox="0 0 640 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#59F1FF"/>
+      <stop offset="1" stop-color="#6C2CFF"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="200" rx="24" fill="transparent"/>
+  <!-- Mark -->
+  <g transform="translate(16,16)">
+    <circle cx="84" cy="84" r="84" fill="url(#g)"/>
+    <path d="M44 52 v64" stroke="#fff" stroke-width="20" stroke-linecap="round"/>
+    <path d="M44 52 h88" stroke="#fff" stroke-width="20" stroke-linecap="round"/>
+    <path d="M44 92 h72" stroke="#fff" stroke-width="20" stroke-linecap="round"/>
+    <path d="M96 120 c18 0 30 6 30 18 0 10-8 18-22 18 h-14" stroke="#fff" stroke-width="20" stroke-linecap="round" fill="none"/>
+  </g>
+  <!-- Wordmark (system font fallback) -->
+  <g transform="translate(200,120)">
+    <text x="0" y="0" font-family="'Inter', 'Sora', 'DM Sans', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif" font-size="72" font-weight="700" fill="#111">
+      FluxPay
+    </text>
+  </g>
+</svg>
+
