@@ -45,7 +45,3 @@ anchor build # or your existing build flow
 # in another terminal
 cd ui && npm install && npm run dev
 ```
-
-## License
-
-MIT
