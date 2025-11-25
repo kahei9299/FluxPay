@@ -37,11 +37,4 @@ FluxPay lets a giver set a time-bound SOL allowance for a recipient with an on-c
   <img src="ui/public/fluxpay-ui.png" alt="FluxPay UI" width="720" />
 </p>
 
-## Development
-```bash
-# in one terminal (Anchor/Solana as needed)
-anchor build # or your existing build flow
 
-# in another terminal
-cd ui && npm install && npm run dev
-```
